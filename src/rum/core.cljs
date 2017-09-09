@@ -161,10 +161,14 @@
 (def ^:private empty-queue [])
 (def ^:private render-queue (volatile! empty-queue))
 
+(defn- isMounted [comp]
+  (.-__isMounted comp))
 
 (defn- render-all [queue]
   (doseq [comp queue
-          :when (.isMounted comp)]
+          ;; :when (.isMounted comp)
+          :when (isMounted comp)
+          ]
     (.forceUpdate comp)))
 
 
